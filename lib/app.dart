@@ -9,9 +9,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorSchemeSeed: const Color(0xff33302e),
       ),
-      home: const HomePage(),
+      initialRoute:
+          // Provider.of<LoginController>(context).isFirstTime
+          //     ?
+          // AppRoute.instance.loginPage
+          //     :
+          AppRoute.instance.homePage,
+      routes: AppRoute.instance.route,
     );
   }
 }

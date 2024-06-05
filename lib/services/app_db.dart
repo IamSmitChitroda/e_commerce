@@ -125,7 +125,7 @@ class AppDb {
     );
   } // initDb
 
-  Future<void> insertLoginData({required DbUser user}) async {
+  Future<void> insertSignupData({required DbUser user}) async {
     Map<String, dynamic> map = user.toJson();
     map.remove('id');
     await loginDb
@@ -167,17 +167,51 @@ class AppDb {
         .then((value) => logger.i('!FavDb! ${product.title} deleted !!'))
         .onError((error, stackTrace) =>
             logger.e('!FavDb! ${product.title} not deleted $error !!'));
+  }
 
-    Future<void> deleteCartData({required DbProduct product}) async {
-      await cartDb
-          .delete(
-            TableName.fav.name,
-            where: '${FavColumn.id.name} = ?',
-            whereArgs: [product.id],
-          )
-          .then((value) => logger.i('!CartDb! ${product.title} deleted !!'))
-          .onError((error, stackTrace) =>
-              logger.e('!CartDb! ${product.title} not deleted $error !!'));
-    }
+  Future<void> deleteCartData({required DbProduct product}) async {
+    await cartDb
+        .delete(
+          TableName.fav.name,
+          where: '${FavColumn.id.name} = ?',
+          whereArgs: [product.id],
+        )
+        .then((value) => logger.i('!CartDb! ${product.title} deleted !!'))
+        .onError((error, stackTrace) =>
+            logger.e('!CartDb! ${product.title} not deleted $error !!'));
+  }
+
+  Future<List<DbUser>> getAllLoginData() async {
+    List<Map<String, dynamic>> allData = await loginDb.query(
+      TableName.login.name,
+    );
+
+    allData.isNotEmpty
+        ? logger.i('!LoginDb! ${allData.length} found !!')
+        : logger.i('!LoginDb! ${allData.length} not found !!');
+
+    return allData.map((e) => DbUser.fromJson(e)).toList();
+  }
+
+  Future<List<DbProduct>> getAllFavProduct() async {
+    List<Map<String, dynamic>> allData =
+        await loginDb.query(TableName.fav.name);
+
+    allData.isNotEmpty
+        ? logger.i('!LoginDb! ${allData.length} found !!')
+        : logger.i('!LoginDb! ${allData.length} not found !!');
+
+    return allData.map((e) => DbProduct.fromJson(e)).toList();
+  }
+
+  Future<List<DbProduct>> getAllCartProduct() async {
+    List<Map<String, dynamic>> allData =
+        await loginDb.query(TableName.cart.name);
+
+    allData.isNotEmpty
+        ? logger.i('!LoginDb! ${allData.length} found !!')
+        : logger.i('!LoginDb! ${allData.length} not found !!');
+
+    return allData.map((e) => DbProduct.fromJson(e)).toList();
   }
 }

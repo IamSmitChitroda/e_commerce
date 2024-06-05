@@ -2,7 +2,7 @@ class Products {
   int id;
   String title;
   String description;
-  String category;
+  String? category;
   double price;
   double discountPercentage;
   double rating;
@@ -48,29 +48,31 @@ class Products {
   });
 
   factory Products.fromJson(Map<String, dynamic> json) => Products(
-        id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        category: json["category"],
-        price: json["price"]?.toDouble(),
+        id: json["id"] ?? 0,
+        title: json["title"] ?? "",
+        description: json["description"] ?? "",
+        category: json["category"] ?? "",
+        price: json["price"]?.toDouble() ?? 0.0,
         discountPercentage: json["discountPercentage"]?.toDouble(),
-        rating: json["rating"]?.toDouble(),
-        stock: json["stock"],
-        tags: List<String>.from(json["tags"].map((x) => x)),
-        brand: json["brand"],
-        sku: json["sku"],
-        weight: json["weight"],
-        dimensions: Dimensions.fromJson(json["dimensions"]),
-        warrantyInformation: json["warrantyInformation"],
-        shippingInformation: json["shippingInformation"],
-        availabilityStatus: json["availabilityStatus"],
+        rating: json["rating"]?.toDouble() ?? 0.0,
+        stock: json["stock"] ?? 0,
+        tags: List<String>.from(json["tags"].map((x) => x)) ?? <String>[],
+        brand: json["brand"] ?? "",
+        sku: json["sku"] ?? "",
+        weight: json["weight"] ?? 0,
+        dimensions:
+            Dimensions.fromJson(json["dimensions"]) ?? Dimensions.fromJson({}),
+        warrantyInformation: json["warrantyInformation"] ?? "",
+        shippingInformation: json["shippingInformation"] ?? "",
+        availabilityStatus: json["availabilityStatus"] ?? "",
         reviews:
-            List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
-        returnPolicy: json["returnPolicy"],
-        minimumOrderQuantity: json["minimumOrderQuantity"],
-        meta: Meta.fromJson(json["meta"]),
-        images: List<String>.from(json["images"].map((x) => x)),
-        thumbnail: json["thumbnail"],
+            List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))) ??
+                [],
+        returnPolicy: json["returnPolicy"] ?? "",
+        minimumOrderQuantity: json["minimumOrderQuantity"] ?? "",
+        meta: Meta.fromJson(json["meta"]) ?? Meta.fromJson({}),
+        images: List<String>.from(json["images"].map((x) => x)) ?? [],
+        thumbnail: json["thumbnail"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

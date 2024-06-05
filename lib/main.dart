@@ -1,3 +1,4 @@
+import 'package:e_commerce/controller/db_controller/db_product_controller.dart';
 import 'package:e_commerce/headers.dart';
 
 Future<void> main() async {
@@ -5,10 +6,12 @@ Future<void> main() async {
 
   await AppDb.instance.initDb();
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
 
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -18,7 +21,13 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (_) => ProductController(),
         ),
-      ],
+        ChangeNotifierProvider(
+          create: (_) => LoginController(sharedPreferences: sharedPreferences),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DbProductController(),
+        ),
+      ], // providers
       child: const MyApp(),
     ),
   );

@@ -8,16 +8,24 @@ class AppApi {
   Logger logger = Logger();
   String productApi = 'https://dummyjson.com/products';
 
-  List<Products> products = [];
+  List<Products> allProducts = [];
 
-  Future<List<Products>> initApiData() async {
+  Future<List<Products>> initApiData({String id = '0'}) async {
+    if (id != '0') {
+      productApi = 'https://dummyjson.com/products/$id';
+    }
+
     http.Response response = await http.get(Uri.parse(productApi));
     logger.i(response.statusCode);
 
     if (response.statusCode == 200) {
-      List data = jsonDecode(response.body)['products'];
-      products = data.map((e) => Products.fromJson(e)).toList();
+      Map map = jsonDecode(response.body);
+      logger.i('map get $map');
+      List data = map['products'];
+      logger.i('data getList  $data');
+      allProducts = data.map((e) => Products.fromJson(e)).toList();
+      logger.i(allProducts);
     }
-    return products;
+    return allProducts;
   }
 }

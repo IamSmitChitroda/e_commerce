@@ -5,6 +5,8 @@ class DbUser {
 
   DbUser({required this.id, required this.email, required this.password});
 
+  DbUser.empty({this.id = 0, this.email = '', this.password = ''});
+
   factory DbUser.fromJson(Map<String, dynamic> map) =>
       DbUser(id: map['id'], email: map['email'], password: map['password']);
 
