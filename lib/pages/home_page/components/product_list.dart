@@ -65,7 +65,13 @@ Widget hpProductList({
                             SizedBox(
                               height: 30,
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  dbUnmutable.isInFav(product: p)
+                                      ? dbUnmutable.addFavouriteProduct(
+                                          product: p)
+                                      : dbUnmutable.removeFavouriteProduct(
+                                          product: p);
+                                },
                                 icon: Icon(
                                   dbUnmutable.isInFav(product: p)
                                       ? Icons.favorite
