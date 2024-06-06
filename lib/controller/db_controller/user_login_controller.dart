@@ -1,14 +1,16 @@
 import 'package:e_commerce/headers.dart';
 
 class LoginController with ChangeNotifier {
-  LoginController({required this.sharedPreferences}) {
+  LoginController(
+      {required this.sharedPreferences, required this.isFirstTime}) {
     getAllUser();
   }
 
   List<DbUser> allUser = [];
-  bool isFirstTime = true;
   Logger logger = Logger();
   SharedPreferences sharedPreferences;
+
+  bool isFirstTime;
 
   Future<void> getAllUser() async {
     allUser = await AppDb.instance.getAllLoginData();
@@ -24,11 +26,12 @@ class LoginController with ChangeNotifier {
 
     allUser.forEach(
       (element) async {
-        bool value =
+        value =
             element.email == user.email && element.password == user.password;
 
         isFirstTime = !isFirstTime;
         await sharedPreferences.setBool('isFirstTime', isFirstTime);
+        notifyListeners();
       },
     );
 

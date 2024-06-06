@@ -14,9 +14,7 @@ Widget hpShimmerEffect() => SizedBox(
                 children: [
                   SizedBox(
                     height: 127,
-                    // width: 100,
                   ),
-                  Text('data'),
                 ],
               ),
               // child: ,

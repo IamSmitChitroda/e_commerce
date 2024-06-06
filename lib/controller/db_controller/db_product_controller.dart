@@ -8,21 +8,32 @@ class DbProductController with ChangeNotifier {
   List<DbProduct> allFavProducts = [];
   List<DbProduct> allCartProducts = [];
 
-  getAllData() async {
+  Future<void> getAllData() async {
     allFavProducts = await AppDb.instance.getAllFavProduct();
     allCartProducts = await AppDb.instance.getAllCartProduct();
     notifyListeners();
   }
 
-  addFavouriteProduct({required Products product}) async {
+  Future<void> addFavouriteProduct({required Products product}) async {
     await AppDb.instance
         .insertFavData(product: DbProduct.fromJson(product.toJson()));
     getAllData();
   }
 
-  addCartProduct({required Products product}) async {
+  Future<void> addCartProduct({required Products product}) async {
     await AppDb.instance
         .insertCartData(product: DbProduct.fromJson(product.toJson()));
     getAllData();
+  }
+
+  bool isInFav({required Products product}) {
+    bool val = false;
+    for (DbProduct element in allFavProducts) {
+      if (element.id == product.id) {
+        val = true;
+        break;
+      }
+    }
+    return val;
   }
 }

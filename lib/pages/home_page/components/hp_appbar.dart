@@ -5,6 +5,12 @@ AppBar hpAppbar() => AppBar(
         onPressed: () {},
         icon: const Icon(Icons.menu_rounded),
       ),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.notifications),
+        ),
+      ],
       centerTitle: true,
       title: const Text('City Shop'),
     );

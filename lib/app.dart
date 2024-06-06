@@ -11,12 +11,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorSchemeSeed: const Color(0xff33302e),
       ),
-      initialRoute:
-          // Provider.of<LoginController>(context).isFirstTime
-          //     ?
-          // AppRoute.instance.loginPage
-          //     :
-          AppRoute.instance.homePage,
+      initialRoute: Provider.of<LoginController>(context).isFirstTime
+          ? AppRoute.instance.loginPage
+          : AppRoute.instance.homePage,
       routes: AppRoute.instance.route,
     );
   }

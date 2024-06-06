@@ -6,7 +6,9 @@ class ProductController with ChangeNotifier {
   }
 
   List<Products> allProducts = [];
+  List<Products> _products = [];
   List<String> allCategories = [];
+  String selectedCategory = 'All';
 
   Logger logger = Logger();
   Future<void> getAllProduct() async {
@@ -16,21 +18,24 @@ class ProductController with ChangeNotifier {
     allCategories = allCategories.toSet().toList();
     allCategories.insert(0, 'All');
 
-    logger.i(' !PRO CTR! allPro:  ${allProducts.length}');
-    logger.i(' !PRO CTR! allCat:  ${allCategories.length}');
-
+    logger.i('!PRO CTR! allPro:  ${allProducts.length}');
+    logger.i('!PRO CTR! allCat:  ${allCategories.length}');
+    _products = allProducts;
     notifyListeners();
   }
 
-  void specificCategoryProduct({required String selectedCategory}) {
+  void specificCategoryProduct() {
     logger.i('!PRO CTR!  enter speCatePro');
-    allProducts
-        .where(
-          (element) => selectedCategory == element.category,
-        )
-        .toList();
-    logger.i(' !PRO CTR! speCatePro:  ${allProducts.length}');
 
+    selectedCategory != "All"
+        ? allProducts = allProducts
+            .where(
+              (element) => selectedCategory == element.category,
+            )
+            .toList()
+        : allProducts = _products;
+
+    logger.i(' !PRO CTR! speCatePro:  ${allProducts.length}');
     notifyListeners();
   }
 

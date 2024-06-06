@@ -1,4 +1,3 @@
-import 'package:e_commerce/controller/db_controller/db_product_controller.dart';
 import 'package:e_commerce/headers.dart';
 
 Future<void> main() async {
@@ -14,7 +13,7 @@ Future<void> main() async {
   );
 
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
+  bool isFirstTime = sharedPreferences.getBool('isFirstTime') ?? true;
   runApp(
     MultiProvider(
       providers: [
@@ -22,7 +21,8 @@ Future<void> main() async {
           create: (_) => ProductController(),
         ),
         ChangeNotifierProvider(
-          create: (_) => LoginController(sharedPreferences: sharedPreferences),
+          create: (_) => LoginController(
+              sharedPreferences: sharedPreferences, isFirstTime: isFirstTime),
         ),
         ChangeNotifierProvider(
           create: (_) => DbProductController(),

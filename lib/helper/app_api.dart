@@ -10,8 +10,8 @@ class AppApi {
 
   List<Products> allProducts = [];
 
-  Future<List<Products>> initApiData({String id = '0'}) async {
-    if (id != '0') {
+  Future<List<Products>> initApiData({String id = ''}) async {
+    if (id != '') {
       productApi = 'https://dummyjson.com/products/$id';
     }
 
