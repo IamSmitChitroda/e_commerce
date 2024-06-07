@@ -29,8 +29,9 @@ class AppApi {
         logger
             .i("Length: ${allProducts.length}\nName: ${allProducts[0].title}");
       } else {
-        List<Map<String, dynamic>> list = map['products'];
+        List list = map['products'];
         allProducts = list.map((e) => Products.fromJson(e)).toList();
+        logger.i("Length: ${allProducts.length}\nName: $allProducts");
       }
     }
     return allProducts;
