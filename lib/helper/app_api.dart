@@ -10,8 +10,8 @@ class AppApi {
 
   List<Products> allProducts = [];
 
-  Future<List<Products>> initApiData({String id = ''}) async {
-    if (id != '') {
+  Future<List<Products>> initApiData({String? id}) async {
+    if (id != null) {
       productApi = 'https://dummyjson.com/products/$id';
     }
 
@@ -20,11 +20,18 @@ class AppApi {
 
     if (response.statusCode == 200) {
       Map map = jsonDecode(response.body);
-      logger.i('map get $map');
-      List data = map['products'];
-      logger.i('data getList  $data');
-      allProducts = data.map((e) => Products.fromJson(e)).toList();
-      logger.i(allProducts);
+      logger.i('map get title: ${map['products']}');
+
+      allProducts.clear();
+
+      if (id != null) {
+        allProducts.add(Products.fromJson(map as Map<String, dynamic>));
+        logger
+            .i("Length: ${allProducts.length}\nName: ${allProducts[0].title}");
+      } else {
+        List<Map<String, dynamic>> list = map['products'];
+        allProducts = list.map((e) => Products.fromJson(e)).toList();
+      }
     }
     return allProducts;
   }

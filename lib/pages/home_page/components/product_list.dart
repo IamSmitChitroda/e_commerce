@@ -16,12 +16,9 @@ Widget hpProductList({
       (index) {
         Products p = mutable.allProducts[index];
         return GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              AppRoute.instance.detailPage,
-              arguments: index,
-            );
+          onTap: () async {
+            await unmutable.dpData(id: p.id.toString()).then((value) =>
+                Navigator.pushNamed(context, AppRoute.instance.detailPage));
           },
           child: Container(
             height: size.height * 0.25,
@@ -68,9 +65,11 @@ Widget hpProductList({
                                 onPressed: () {
                                   dbUnmutable.isInFav(product: p)
                                       ? dbUnmutable.addFavouriteProduct(
-                                          product: p)
-                                      : dbUnmutable.removeFavouriteProduct(
-                                          product: p);
+                                          product: p,
+                                        )
+                                      : dbUnmutable.deleteFavouriteProduct(
+                                          product: p,
+                                        );
                                 },
                                 icon: Icon(
                                   dbUnmutable.isInFav(product: p)
@@ -82,8 +81,21 @@ Widget hpProductList({
                             SizedBox(
                               height: 30,
                               child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(CupertinoIcons.cart_fill)),
+                                onPressed: () {
+                                  dbUnmutable.isInCart(product: p)
+                                      ? dbUnmutable.deleteCartProduct(
+                                          product: p,
+                                        )
+                                      : dbUnmutable.addCartProduct(
+                                          product: p,
+                                        );
+                                },
+                                icon: Icon(
+                                  dbUnmutable.isInCart(product: p)
+                                      ? CupertinoIcons.cart_fill
+                                      : CupertinoIcons.shopping_cart,
+                                ),
+                              ),
                             )
                           ],
                         ),

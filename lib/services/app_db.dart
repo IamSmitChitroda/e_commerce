@@ -194,8 +194,13 @@ class AppDb {
   }
 
   Future<List<DbProduct>> getAllFavProduct() async {
+    sql = "SELECT * FROM '${TableName.fav.name}';";
     List<Map<String, dynamic>> allData =
         await loginDb.query(TableName.fav.name);
+    // List<Map<String, dynamic>> allData = await loginDb.rawQuery(
+    // sql,
+    // [TableName.fav.name],
+    // );
 
     allData.isNotEmpty
         ? logger.i('!LoginDb! ${allData.length} found !!')

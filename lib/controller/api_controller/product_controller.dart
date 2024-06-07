@@ -39,11 +39,10 @@ class ProductController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getProduct({required String id}) async {
+  Future<void> dpData({required String id}) async {
     logger.i('!PRO CTR!  enter getProduct');
     allProducts = await AppApi.instance.initApiData(id: id);
     logger.i(' !PRO CTR! getPro:  ${allProducts.length}');
-
     notifyListeners();
   }
 }
