@@ -17,8 +17,14 @@ Widget hpProductList({
         Products p = mutable.allProducts[index];
         return GestureDetector(
           onTap: () async {
-            await unmutable.dpData(id: p.id.toString()).then((value) =>
-                Navigator.pushNamed(context, AppRoute.instance.detailPage));
+            await unmutable.dpData(id: p.id.toString()).then(
+                  (value) => Navigator.pushNamed(
+                    context,
+                    AppRoute.instance.adDetailPage,
+                  ).then(
+                    (value) => unmutable.getAllListReturn(),
+                  ),
+                );
           },
           child: Container(
             height: size.height * 0.25,

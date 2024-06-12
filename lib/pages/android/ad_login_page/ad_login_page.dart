@@ -1,12 +1,13 @@
 import 'package:e_commerce/headers.dart';
 
-class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
+class AdLoginPage extends StatelessWidget {
+  const AdLoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     DbUser user = DbUser.empty();
+    Logger logger = Logger();
     // =========================================================================
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -19,7 +20,7 @@ class SignupPage extends StatelessWidget {
             children: [
               SizedBox(height: size.height * 0.1),
               const Text(
-                'Create\nyour account',
+                'Login into\nyour account',
                 style: TextStyle(fontSize: 30),
                 textAlign: TextAlign.left,
               ),
@@ -40,44 +41,56 @@ class SignupPage extends StatelessWidget {
                   labelText: 'Password',
                 ),
               ),
-              TextField(
-                onChanged: (value) {
-                  user.password = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Confirm password',
-                ),
+              SizedBox(height: size.height * 0.03),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('Forgot Password?'),
+                ],
               ),
-              SizedBox(height: size.height * 0.08),
+              SizedBox(height: size.height * 0.06),
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await Provider.of<LoginController>(
+                    if (Provider.of<LoginController>(
                       context,
                       listen: false,
-                    ).signup(user: user).then((value) {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        AppRoute.instance.loginPage,
+                    ).login(user: user)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Login Successful'),
+                        ),
                       );
-                    });
+                      Navigator.pushNamed(
+                          context, AppRoute.instance.adHomePage);
+                    } // if
+                    else {
+                      logger.i('Login Failed');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Login Failed'),
+                        ),
+                      );
+                      Navigator.pushNamed(
+                          context, AppRoute.instance.adSignupPage);
+                    } // else
                   },
-                  child: const Text('Sign up'),
+                  child: const Text('Login'),
                 ),
               ),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Already have an account?"),
+                  const Text("Don't have an account?"),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(
-                          context, AppRoute.instance.loginPage);
+                      Navigator.pushNamed(
+                          context, AppRoute.instance.adSignupPage);
                     },
-                    child: const Text('Login'),
+                    child: const Text('Register'),
                   ),
                 ],
               )

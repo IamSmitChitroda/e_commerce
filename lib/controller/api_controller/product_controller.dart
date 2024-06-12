@@ -45,4 +45,9 @@ class ProductController with ChangeNotifier {
     logger.i(' !PRO CTR! getPro:  ${allProducts.length}');
     notifyListeners();
   }
+
+  void getAllListReturn() {
+    allProducts = _products;
+    notifyListeners();
+  }
 }

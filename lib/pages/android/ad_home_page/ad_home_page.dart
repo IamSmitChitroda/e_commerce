@@ -1,7 +1,7 @@
 import 'package:e_commerce/headers.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class AdHomePage extends StatelessWidget {
+  const AdHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
     ProductController mutable = Provider.of<ProductController>(context);
     ProductController unmutable =
         Provider.of<ProductController>(context, listen: false);
-    var logger = Logger();
+    Logger logger = Logger();
     return Scaffold(
       appBar: hpAppbar(),
       body: Padding(

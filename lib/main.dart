@@ -13,10 +13,14 @@ Future<void> main() async {
   );
 
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
   bool isFirstTime = sharedPreferences.getBool('isFirstTime') ?? true;
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => PlatformController(),
+        ),
         ChangeNotifierProvider(
           create: (_) => ProductController(),
         ),
@@ -26,6 +30,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => DbProductController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PopController(),
         ),
       ], // providers
       child: const MyApp(),
